@@ -6,16 +6,12 @@ sc_clf_all
 reset_fig_indx();
 
 filename = 'Untitled (1).png';
-xmin = 1; xmax = inf;
-ymin = 1; ymax = inf;
+img = McHyphaeImage(filename);
 
-disksize = 10;
-min_area_1 = 10;
-connectivity_1 = 4;
-connectivity_2 = 8;
-min_area_2 = 30;
-max_area_2 = 200;
-max_eccentricity = .9;
+[xmin, xmax, ymin, ymax, disksize, min_area_1, connectivity_1, ...
+  connectivity_2, min_area_2, max_area_2, min_eccentricity, max_eccentricity] = ...
+  extract_struct_data(img, 'xmin', 'xmax', 'ymin', 'ymax', 'disksize', 'min_area_1', 'connectivity_1', ...
+  'connectivity_2', 'min_area_2', 'max_area_2', 'min_eccentricity', 'max_eccentricity');
 
 m1 = imread(filename);
 incr_fig_indx();
@@ -55,7 +51,7 @@ ind = area >= min_area_2 & area <= max_area_2;
 
 tmp_ecc = regionprops(components, 'Eccentricity');
 ecc = cell2mat({tmp_ecc.Eccentricity});
-ind = ind & ecc < max_eccentricity;
+ind = ind & ecc >= min_eccentricity & ecc <= max_eccentricity;
 
 detected_bacteria = components.PixelIdxList(ind);
 
