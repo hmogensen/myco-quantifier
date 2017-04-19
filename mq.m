@@ -1,11 +1,16 @@
 clc
 clear
-
-
 sc_clf_all
-reset_fig_indx();
 
-filename = 'Untitled (1).png';
+filename = 'DSC_0611.JPG';%'Untitled (1).png';
+
+h_mq = HyphaeQuantifier(filename, 'lower_threshold', .5);%MycoQuantifier(filename);
+
+h_mq.detect();
+
+
+return
+
 img = McHyphaeImage(filename);
 
 [xmin, xmax, ymin, ymax, disksize, min_area_1, connectivity_1, ...
